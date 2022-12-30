@@ -1,12 +1,16 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Button from '../button/button'
 import Card from '../Card/card'
 import ErrorModal from '../ErrorModal/errormodal'
 import classes from './Home.module.css'
 const Home = props=> {    
+    const userName = useRef();
+    const userAge = useRef();
     const addUser = event=>{
         event.preventDefault()
-        if(userDetails.userName.trim().length==0 || userDetails.userAge.trim().length==0)
+        const enteredUserName = userName.current.value;
+        const enteredUserAge = userAge.current.value;
+        if(enteredUserName.trim().length==0 || enteredUserAge.trim().length==0)
         {
             setErrorDetail((prev)=>{
                 return {
@@ -18,7 +22,7 @@ const Home = props=> {
             })
             return;
         }
-        if(userDetails.userAge<1){
+        if(enteredUserAge<1){
             setErrorDetail((prev)=>{
                 return {
                     ...prev,
@@ -30,41 +34,13 @@ const Home = props=> {
             return;
         }
         let data = {
-            name:userDetails.userName,
-            age:userDetails.userAge
+            name:enteredUserName,
+            age:enteredUserAge
         }
-        setUserArray((prev)=>{
-            return {
-                ...prev,
-                userName:"",
-                userAge:"",
-            }
-        });
+        userName.current.value = "";
+        userAge.current.value = ""
         props.onClick(data)
     }
-    const addUserName = event=>{
-        event.preventDefault()
-        setUserArray((prev)=>{
-            return{
-                ...prev,
-                userName:event.target.value
-            }
-        })
-    }
-    const addUserAge = event=>{
-        event.preventDefault()
-        setUserArray((prev)=>{
-            return{
-                ...prev,
-                userAge:event.target.value
-            }
-        })
-    }
-
-    const [userDetails, setUserArray] = useState({
-        userName:'',
-        userAge:'',
-    });
     const [errorDetails,setErrorDetail] = useState({
         title:'',
         message:'',
@@ -87,10 +63,10 @@ const Home = props=> {
         <Card className={classes.home}>
         <form onSubmit={addUser}>
             <label htmlFor="user"> User</label>
-            <input name="user" value={userDetails.userName} onChange={addUserName} type="text"/>
+            <input name="user" ref={userName}  type="text"/>
             <br/>
             <label htmlFor="age">Age</label>  
-            <input name="age" value={userDetails.userAge} onChange={addUserAge} type="text"/>  
+            <input name="age" ref={userAge} type="text"/>  
             <br/>
             <Button className ={classes.btt} text={'Button'} type={'submit'}></Button>
         </form>
