@@ -1,23 +1,25 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import Home from './Components/Ui/Home/Home';
+import UserList from './Components/Users/userlist/userList';
 
 function App() {
+  const [userArray, setUserArray] = useState([]);
+  const getData = data=>{
+    data.key = userArray.length
+    setUserArray((prev)=>{
+      return [...prev,data]
+
+    })
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Home onClick={getData}></Home>
+      {
+                userArray.map((value)=>{
+                    return <UserList key ={value.key} userName={value.name} userAge={value.age}/>
+                })
+            }
     </div>
   );
 }

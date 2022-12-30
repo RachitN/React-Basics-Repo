@@ -1,0 +1,25 @@
+.btt{
+    background-color: dodgerblue;
+    width: 80px;
+    border-radius: 5px;
+}
+
+.home{
+    background-color: white;
+    width: 400px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    border: 10px blue solid;
+    justify-content: center;
+}
+
+.home input{
+    border: 1px black dashed;
+    border-radius: 5px;
+    margin-left: 15px;
+}
+
+.home input:focus{
+  outline: none;
+}
