@@ -12,9 +12,19 @@ function App() {
 
     })
   }
+
+  const checkUserDetails = data=>{
+    var check = userArray.find((value)=>{
+        if(value.name==data)
+        {
+          return true;
+        }
+    })
+    return check
+  }
   return (
     <div className="App">
-      <Home onClick={getData}></Home>
+      <Home onClick={getData} checkUserDetails = {checkUserDetails}></Home>
       {
                 userArray.map((value)=>{
                     return <UserList key ={value.key} userName={value.name} userAge={value.age}/>

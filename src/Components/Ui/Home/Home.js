@@ -10,6 +10,18 @@ const Home = props=> {
         event.preventDefault()
         const enteredUserName = userName.current.value;
         const enteredUserAge = userAge.current.value;
+        if(props.checkUserDetails(enteredUserName))
+        {   userName.current.value = "";
+            setErrorDetail((prev)=>{
+                return {
+                    ...prev,
+                    title:'User Error',
+                    message : 'User Already Exist!',
+                    showMessage:true
+                }
+            })
+            return;
+        }
         if(enteredUserName.trim().length==0 || enteredUserAge.trim().length==0)
         {
             setErrorDetail((prev)=>{
